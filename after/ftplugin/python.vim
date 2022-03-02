@@ -1,6 +1,14 @@
 if exists("t:python_PlugPluggidiliditity")
   finish
 endif
+
+
+
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+    Plug 'Yggdroot/indentLine'
+call plug#end()
+
+
 let t:python_PlugPluggidiliditity = 1
 let g:python_RunFile = 'undefined'
 
@@ -118,3 +126,4 @@ nnoremap  <C-p> :w!<CR>:call NeotermTerminalPython(@%, winnr(), 0)<CR>
 nnoremap  <F10> :w!<CR>:Tkill<CR>
 nnoremap  <C-w><C-p> :w!<CR>:Tkill<CR>
 
+autocmd BufWinEnter :setlocal completeopt=menuone,noselect "removes double pressing enter

@@ -24,10 +24,13 @@ runtime colors/alduin.vim
 
 if exists('g:neovide')
     let g:neovide_transparency=0.8
-    hi Normal guibg=#070707
+    "hi Normal guibg=#070707
+    hi Normal guibg=#1a1a1a
 else
     "hi Normal guibg=none
-    hi Normal guibg=#1c1c1c
+    "hi Normal guibg=#1c1c1c
+    "hi Normal guibg=#303434
+    hi Normal guibg=#333333
 endif
 
 highlight CursorLine guibg=None
@@ -189,8 +192,30 @@ hi foldImports ctermfg=222 ctermbg=233 guifg=#ffdf87 guibg=None
 "autocmd FileType python :hi lualine_a_command guibg=#d29958
 
 
-"let g:neovide_transparency=0.9
-"hi Normal guibg=#1a1a1a
-
+"let g:neovide_transparency=0.79
+let g:neovide_transparency=0.84
 let g:neovide_floating_opacity=0.65
-let g:neovide_floating_blur=v:true
+let g:neovide_floating_blue=v:true
+hi VertSplit guifg=#3c3836 guibg=#3c3836
+
+hi ColorColumn guifg=none guibg=#404040
+highlight VertSplit   guifg=#404040 guibg=#404040
+highlight lualine_c_inactive  guifg=#a89984 guibg=#404040
+highlight StatusLineNC  guifg=#a89984 guibg=#404040
+highlight TabLineFill  guifg=#a89984 guibg=#404040
+highlight TabLineSel  gui=bold guifg=#282828 guibg=#a89984
+"nnoremap : :hi ColorColumn guibg=#7c6f64<CR>:hi VertSplit guibg=#7c6f64 guifg=#7c6f64<CR>:
+autocmd InsertEnter * highlight ColorColumn guibg=#504945
+autocmd InsertEnter * highlight VertSplit   guifg=#504945 guibg=#504945
+autocmd InsertEnter * highlight lualine_c_inactive  guifg=#ebdbb2 guibg=#504945
+autocmd InsertEnter * highlight StatusLineNC  guifg=#ebdbb2 guibg=#504945
+autocmd InsertEnter * highlight TabLineFill  guifg=#ebdbb2 guibg=#504945
+autocmd InsertEnter * highlight TabLineSel  gui=bold guifg=#282828 guibg=#83a598
+
+autocmd InsertLeave * highlight ColorColumn guibg=#404040
+autocmd InsertLeave * highlight VertSplit   guifg=#404040 guibg=#404040
+autocmd InsertLeave * highlight lualine_c_inactive  guifg=#a89984 guibg=#404040
+autocmd InsertLeave * highlight StatusLineNC  guifg=#a89984 guibg=#404040
+autocmd InsertLeave * highlight TabLineFill  guifg=#a89984 guibg=#404040
+autocmd InsertLeave * highlight TabLineSel  gui=bold guifg=#282828 guibg=#a89984
+

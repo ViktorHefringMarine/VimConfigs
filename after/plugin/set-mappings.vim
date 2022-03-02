@@ -35,7 +35,6 @@ imap <M-k> <Up>
 imap <M-l> <Right>
 imap <M-b> <ESC>bi
 imap <M-e> <ESC>ea
-
 "-------------------------------
 " Command mode
 "Move in Comand Mode (Alt-key)
@@ -212,8 +211,32 @@ nnoremap <leader>fn :Maps<CR>
 
 
 
-nnoremap <M-[> :bp<CR>
-nnoremap <M-]> :bn<CR>
+nnoremap \j :bn<CR>
+nnoremap \k :bp<CR>
+"nnoremap <silent> \d * :lua vim.diagnostic.goto_next()<CR>
+nmap <silent> \d * ]d
 
 
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+tnoremap <Esc> <C-\><C-n>
+
+
+
+nnoremap <C-k> 4k
+nnoremap <C-j> 4j
+nnoremap <C-d> 3j
+nnoremap <C-u> 3k
+nnoremap ma :call ToggleMaximizeCurrentWindow()<CR>
+
+
+nnoremap 't gg
+nnoremap 'b G
+
+nnoremap \l :Buffers<CR>
+nnoremap <leader>/ :set hlsearch!<CR>
+
+nnoremap <silent>  * :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=1<CR>n
+nnoremap <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=0<CR>n
+nnoremap <silent> g* :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=1<CR>n
+nnoremap <silent> g# :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=0<CR>n
 

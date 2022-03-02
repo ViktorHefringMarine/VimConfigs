@@ -26,8 +26,7 @@ if exists('g:neovide')
     let g:neovide_transparency=0.8
     hi Normal guibg=#070707
 else
-    "hi Normal guibg=none
-    hi Normal guibg=#1c1c1c
+    hi Normal guibg=none
 endif
 
 highlight CursorLine guibg=None
@@ -189,8 +188,11 @@ hi foldImports ctermfg=222 ctermbg=233 guifg=#ffdf87 guibg=None
 "autocmd FileType python :hi lualine_a_command guibg=#d29958
 
 
-"let g:neovide_transparency=0.9
-"hi Normal guibg=#1a1a1a
-
+let g:neovide_transparency=0.9
+hi Normal guibg=#1a1a1a
 let g:neovide_floating_opacity=0.65
-let g:neovide_floating_blur=v:true
+let g:neovide_floating_blue=v:true
+
+
+hi Search guibg=#404040
+

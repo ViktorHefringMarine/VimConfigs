@@ -412,11 +412,7 @@ require'lsp_signature'.setup(cfg) -- no need to specify bufnr if you don't use t
 local custom_gruvbox = require'lualine.themes.gruvbox'
 
 -- Change the background of lualine_c section for normal mode
-custom_gruvbox.command.a.bg = '#d29958'
---custom_gruvbox.normal.b.bg = 'none'
---custom_gruvbox.normal.c.bg = 'none'
-custom_gruvbox.normal.b.bg = '#404040'
-custom_gruvbox.normal.c.bg = '#404040'
+custom_gruvbox.normal.c.bg = '#112233'
 
 require('lualine').setup {
   options = { theme  = custom_gruvbox },
@@ -429,8 +425,15 @@ require('lualine').setup {
       lualine_c = {
           {'filename',
             path = 1,
+            color={bg='none'}
           }
       },
+      lualine_d = {
+          {
+
+            color={bg='none'}
+          }
+      }
   }
 }
 

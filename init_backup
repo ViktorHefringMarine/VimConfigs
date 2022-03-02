@@ -1,7 +1,33 @@
+
+
+
+
+" Index
+" 'p - Plugins
+" 'f - FZF
+" '1 - Tagbar
+" 'l - LeaderF
+
+" init.vim
+
+
+
+
+
+" Remember
+" vimwiki: change list in insert mode, by using <C-L><C-K>
+" ]b and [b cycle buffers
+"if exists($CONDA_DEFAULT_ENV) == 0
+"    call CondaInit('base')
+"endif
+
 let $VIMHOME = expand('<sfile>')
+
+
+
+
 filetype plugin on
 syntax enable
-
 "################
 "# Set Commands #
 "################
@@ -24,23 +50,58 @@ set scrolloff=4
 set noshowmode
 set colorcolumn=80
 set signcolumn=no
-set cmdheight=2
+"set foldmethod=indent
+if exists('neovide')
+    set cmdheight=2
+else
+    set cmdheight=1
+endif
 set updatetime=50
 set shortmess +=c
+"set nohlsearch
 set foldcolumn=1
+"PopUp menu
 set pumblend=10
 set pumheight=50
 set showtabline=2
-set invhlsearch
+"set pumwidth=..
+
+
+"if $CONDA_DEFAULT_ENV == ''
+"    let g:CondaEnv = 'GDAL'
+"endif
+
 
 let g:neovide_transparency=0.75
 let g:neovide_remember_window_size = v:true
-let g:neovide_hide_mouse_when_typing=v:true
-let g:neovide_cursor_vfx_mode = "railgun"
+
+
 
 let g:python3_host_prog = 'C:/Users/Lenovo/miniconda3/envs/LSPenv/python'
 
+"set guifont=Consolas:h13
+"set guifont=Consolas:h13
+
 if exists('g:neovide')
+    " to check out the available fonts then checkout the powershell command
+    " > [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+    " > (New-Object System.Drawing.Text.InstalledFontCollection).Families
+    " source: https://superuser.com/questions/760627/how-to-list-installed-font-families
+    " Not working
+    " - set guifont=FiraMono\ Nerd\ Font\ Mono:h12
+    " Working
+    "set guifont=MesloLGMDZ\ Nerd\ Font:h12
+    "set guifont=MesloLGL\ Nerd\ Font:h12
+    "set guifont=Consolas
+    "set guifont=Iosevka
+    "set guifont=InconsolataLGC\ NF
+    "set guifont=FiraCode\ Nerd\ Font:h12
+    "set guifont=JetBrainsMono\ Nerd\ Font:h12
+    "set guifont=Hack\ Nerd\ Font:h12
+
+    "Usage History
+    "set guifont=Hack\ Nerd\ Font:h12
+    "set guifont=JetBrainsMono\ Nerd\ Font:h12
     set guifont=FiraCode\ Nerd\ Font:h12
 else
     set guifont=Consolas:h12
@@ -52,8 +113,6 @@ endif
 "##############################################################################
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
     Plug 'dstein64/vim-startuptime'
-    Plug 'pmalek/toogle-maximize.vim'
-    "Plug 'itmammoth/maximize.vim'
     Plug 'jiangmiao/auto-pairs'
     "Plug 'vim-airline/vim-airline'
     "Plug 'vim-airline/vim-airline-themes'
@@ -66,7 +125,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
     "Plug 'jeetsukumaran/vim-buffergator'
     Plug 'kassio/neoterm'
     Plug 'preservim/tagbar'
-    "Plug 'preservim/nerdtree'
+    Plug 'preservim/nerdtree'
     Plug 'vimwiki/vimwiki'
 
     Plug 'glepnir/dashboard-nvim'
@@ -87,15 +146,11 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
         Plug 'williamboman/nvim-lsp-installer'
         "Plug 'glepnir/lspsaga.nvim'
 
-        Plug 'nvim-lualine/lualine.nvim'
-        Plug 'kyazdani42/nvim-web-devicons'
-
-
         Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
         Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
         Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 
-        "Plug 'prabirshrestha/asyncomplete.vim'
+        Plug 'prabirshrestha/asyncomplete.vim'
 
         Plug 'ray-x/lsp_signature.nvim'
 
@@ -112,15 +167,17 @@ call plug#end()
 "##############################################################################
 " Plugin Related Configs
 "##############################################################################
-"colorscheme transparent_light_grey
-"colorscheme TransparentSmooth
-colorscheme TransparentWFrame
+
+"colorscheme alduin_transparent
+colorscheme transparent_light_grey
 "------------------------------------------------------------------------------
 " Neorterm - kassio/neoterm
 " * 1. dont remember
 " * 2. Now the register can be used in the terminal that is Ctrl-R
 " * 3. dont remember
 let &runtimepath.=',~/.vim/bundle/neoterm'
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+tnoremap <Esc> <C-\><C-n>
 let g:neoterm_automap_keys = '\w_thrash_1'
 "------------------------------------------------------------------------------
 " Auto Pairs - jiangmiao/auto-pairs
@@ -190,20 +247,6 @@ let g:NERDTreeWinPos = 'left'
 "------------------------------------------------------------------------------
 "------------------------------------------------------------------------------
 " LSP
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" prabirshrestha/asyncomplete.vim
-let g:asyncomplete_auto_popup = 0
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : asyncomplete#force_refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 "autocmd VimEnter execute ':TSUpdate'
 "lua require('lua')
 
@@ -264,8 +307,34 @@ let $FZF_DEFAULT_OPTS = "--preview-window 'right:57%'  --bind 'ctrl-y:preview-up
 
 " Dashboard
 let g:dashboard_default_executive = 'fzf'
+
+"let s:dashboard_logo = 'Neovim'
+
 let s:dashboard_logo = 'something'
-if s:dashboard_logo == 'Hydra'
+
+if s:dashboard_logo == 'Doom'
+    let g:dashboard_custom_header =<< trim END
+    =================     ===============     ===============   ========  ========
+    \\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
+    ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
+    || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
+    ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
+    || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
+    ||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
+    || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
+    ||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
+    ||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
+    ||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
+    ||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
+    ||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
+    ||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
+    ||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
+    ||.=='    _-'                                                     `' |  /==.||
+    =='    _-'                        N E O V I M                         \/   `==
+    \   _-'                                                                `-_   /
+     `''                                                                      ``'
+    END
+elseif s:dashboard_logo == 'Hydra'
     let g:dashboard_custom_header = [
         \'',
         \'   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣭⣿⣶⣿⣦⣼⣆         ',
@@ -284,24 +353,25 @@ if s:dashboard_logo == 'Hydra'
         \'     ⠸⠿  ⠿  ⠸⠿  ⠿⠷⠶⠿⠃⠸⠿⠄⠙⠷⠤⠿⠉⠉⠿⠆   ',
         \'',
         \]
+"elseif s:dashboard_logo == 'Hydra'
 else
-    if exists('neovide')
+    if exists('g:neovide')
         let g:dashboard_custom_header = [
-                \'',
-                \'',
-                \'',
-                \'',
-                \'',
-                \'',
-                \'',
-                \'',
-                \ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-                \ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-                \ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-                \ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-                \ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-                \ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-                \]
+                    \'',
+                    \'',
+                    \'',
+                    \'',
+                    \'',
+                    \'',
+                    \'',
+                    \'',
+                    \ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+                    \ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+                    \ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+                    \ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+                    \ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+                    \ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+                    \]
     else
         let g:dashboard_custom_header = [
         \ '',
@@ -309,20 +379,40 @@ else
         \ '',
         \ '',
         \ '',
-        \ ' ██╗   ██╗ ██╗ ███╗   ███╗',
-        \ ' ██║   ██║ ██║ ████╗ ████║',
-        \ ' ██║   ██║ ██║ ██╔████╔██║',
-        \ ' ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-        \ '  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-        \ '   ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+        \ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+        \ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+        \ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+        \ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+        \ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+        \ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
         \]
     endif
 endif
+
+
 hi DashboardCenter guifg=#8fbcbb
 hi DashboardHeader guifg=#616e88
 hi DashboardFooter guifg=#2e3440
+
+
+"let g:dashboard_custom_shortcut_icon = {}
+"let g:dashboard_custom_shortcut_icon['last_session'] = ''
+"let g:dashboard_custom_shortcut_icon['find_history'] = 'ﭯ '
+"let g:dashboard_custom_shortcut_icon['find_file'] = ' '
+"let g:dashboard_custom_shortcut_icon['new_file'] = ' '
+"let g:dashboard_custom_shortcut_icon['change_colorscheme'] = ' '
+"let g:dashboard_custom_shortcut_icon['find_word'] = ' '
+"let g:dashboard_custom_shortcut_icon['book_marks'] = ' '
+
+
+
+
+
 "------------------------------------------------------------------------------
 " Dashboard
+
+
+
 
 " LeaderF
 
@@ -366,6 +456,22 @@ let g:Lf_PopupPalette = {
 "let ambiwidth=double
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 "##############################################################################
 "# Mappings
 "# > the mappings are located in the following file
@@ -383,15 +489,6 @@ fun! TrimWhitespace()
     call winrestview(l:save)
 endfun
 
-"If you don't want to turn 'hlsearch' on, but want to highlight all
-"matches while searching, you can turn on and off 'hlsearch' with
-"autocmd.  Example: >
-"augroup vimrc-incsearch-highlight
-"    autocmd!
-"    autocmd CmdlineEnter /,\? :set hlsearch
-"    autocmd CmdlineLeave /,\? :set nohlsearch
-"augroup END
-
 augroup THE_PRIMEAGEN
     autocmd!
     "--------------------------------------------------------------------------
@@ -400,11 +497,6 @@ augroup THE_PRIMEAGEN
     autocmd BufRead,BufNewFile *.wiki set filetype=vimwiki
     autocmd BufWinEnter * silent setlocal formatoptions-=cro
     autocmd BufWritePre * :call TrimWhitespace()
-
-    autocmd BufWinEnter * noremap 't gg
-    autocmd BufWinEnter * noremap 'b G
-    autocmd BufWinEnter * noremap 'n /\vclass \|def <CR>
-    autocmd BufWinEnter * nnoremap 'f :Files<CR>
     "--------------------------------------------------------------------------
     " FileType Plugins
     autocmd FileType vim :setlocal foldmethod=indent
@@ -417,16 +509,10 @@ augroup THE_PRIMEAGEN
     "--------------------------------------------------------------------------
     "Not Sorted
     autocmd BufWinEnter :set pumheight=50
-    "autocmd FileType python :setlocal omnifunc=v:lua.vim.lsp.omnifunc
-    "autocmd FileType python :setlocal completeopt=menuone,noinsert,noselect
-    autocmd FileType python :setlocal completeopt=menuone,noselect "removes double pressing enter
+    autocmd FileType python :setlocal omnifunc=v:lua.vim.lsp.omnifunc
+    autocmd FileType python :setlocal completeopt=menuone,menuone,noinsert,noselect
     autocmd FileType python :inoremap <expr> <Tab> pumvisible() ? '<Down>' : '<Tab>'
     autocmd FileType python :inoremap <expr> <S-Tab> pumvisible() ? '<Up>' : '<S-Tab>'
-
-    " AMAZING. GoTo left-most word in the current line. If you're already on it
-    "          then go further to the left
-    nnoremap <expr> 0 col('.')<=5 ? '0' : '^'
-
     "--------------------------------------------------------------------------
     autocmd FileType python :syn region foldImports start='"""' end='"""' fold keepend
     autocmd FileType python :setlocal foldmethod=syntax
@@ -444,6 +530,32 @@ augroup THE_PRIMEAGEN
     "--------------------------------------------------------------------------
 augroup END
 
+
+"##############################################################################
+"# Highlighting #
+"##############################################################################
+" Alduin Background Colors
+" RED:     #2f1814 #2f0d07 #2a0d07 #270d08
+" Yellow to Orange:  #181304  #181004  #180D04
+
+"highlight Normal guibg=None
+"highlight Folded guibg=None
+"highlight FoldColumn guibg=None guifg=#928374
+"highlight SignColumn guibg=None
+"highlight ColorColumn ctermfg=237 ctermbg=237  guibg=#3c3836 guifg=#a89984  "gui=reverse
+
+"hi Normal guibg=#1f1614
+"let g:neovide_transparency=0.82
+
+"hi Normal guibg=#42221C
+"hi pythonFunction guifg=#b598a5
+"hi pythonFunctionCall guifg=#b598a5
+"hi semshiImported guifg=#d29958
+"hi semshiBuiltin ctermfg=5 gui=italic guifg=#ba9734
+"hi semshiBuiltin ctermfg=5 gui=italic guifg=#bed077
+"hi Statement guifg=#9f9f9f
+"let g:neovide_transparency=0.7
+"##############################################################################
 filetype off
 let &runtimepath.= ', '. stdpath('data') . '/plugged/neoterm'
 let g:neoterm_eof="\r"
@@ -453,6 +565,32 @@ filetype plugin on
 
 "##############################################################################
 " Gui Configurations
+
+"if exists(':GuiFont')
+"endif
+"source 'C:/Users/Lenovo/scoop/apps/neovim/current/share/nvim-qt/runtime'
+"source 'C:/Users/Lenovo/scoop/apps/neovim/current/share/nvim-qt/runtime/plugin/nvim_gui_shim.vim'
+"function Tester()
+"    source 'C:/Users/Lenovo/scoop/apps/neovim/current/share/nvim-qt/runtime/plugin/nvim_gui_shim.vim'
+    "if exists(':GuiPopupmenu')
+    "    source 'C:/Users/Lenovo/scoop/apps/neovim/current/share/nvim-qt/runtime/plugin/nvim_gui_shim.vim'
+    "endif
+"endfunction
+"au VimEnter :call Tester()
+
+
+
+
+function NeoTheme()
+    hi Normal guibg=none ctermbg=none
+    hi LineNr guibg=none ctermbg=none
+    hi Folded guibg=none ctermbg=none
+    hi NonText guibg=none ctermbg=none
+    hi SpecialKey guibg=none ctermbg=none
+    hi VertSplit guibg=none ctermbg=none
+    hi SignColumn guibg=none ctermbg=none
+    hi EndOfBuffer guibg=none ctermbg=none
+endfunction
 
 "hi Normal guibg=none ctermbg=none
 "hi LineNr guibg=none ctermbg=none
@@ -475,4 +613,28 @@ source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/SidePannel.vim
 "source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/Other.vim
 "source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/markdown_stuff.vim
 source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/vimwiki.vim
+
+
+
+
+
+
+
+
+
+lua << EOF
+
+EOF
+
+"<SNR>5_SynSet
+
+
+
+
+
+
+
+
+
+let g:python3_host_prog = 'C:/Users/Lenovo/miniconda3/envs/LSPenv/python.exe'
 
