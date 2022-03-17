@@ -1,6 +1,11 @@
+
+
+"lua require('plugins')
+
 let $VIMHOME = expand('<sfile>')
 filetype plugin on
 syntax enable
+"syntax match   mySpecialSymbols "+\|-\|\*\|;\|?\|:\|,\|<\|>\|&\||\|!\|\~\|%\|=\|)\|(\|{\|}\|\.\|\[\|\]"
 
 "################
 "# Set Commands #
@@ -32,6 +37,8 @@ set pumblend=10
 set pumheight=50
 set showtabline=2
 set invhlsearch
+set incsearch
+set hlsearch!
 
 let g:neovide_transparency=0.75
 let g:neovide_remember_window_size = v:true
@@ -52,6 +59,10 @@ endif
 "##############################################################################
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
     Plug 'dstein64/vim-startuptime'
+    "Plug 'joshdick/onedark.vim'
+    "Plug 'ggandor/lightspeed.nvim'
+    Plug 'navarasu/onedark.nvim'
+    Plug 'ulwlu/elly.vim'
     Plug 'pmalek/toogle-maximize.vim'
     "Plug 'itmammoth/maximize.vim'
     Plug 'jiangmiao/auto-pairs'
@@ -105,7 +116,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
         "Plug 'ms-jpq/coq.artifacts'
         "Plug 'ms-jpq/coq.thirdparty', {'branch':'3p'}
     endif
-    "Plug 'JuliaEditorSupport/julia-vim'
+    Plug 'JuliaEditorSupport/julia-vim'
 call plug#end()
 
 
@@ -114,7 +125,7 @@ call plug#end()
 "##############################################################################
 "colorscheme transparent_light_grey
 "colorscheme TransparentSmooth
-colorscheme TransparentWFrame
+"colorscheme TransparentWFrame
 "------------------------------------------------------------------------------
 " Neorterm - kassio/neoterm
 " * 1. dont remember
@@ -412,6 +423,11 @@ augroup THE_PRIMEAGEN
     autocmd FileType python :setlocal signcolumn=yes
     autocmd FileType vimwiki :setlocal norelativenumber
     "--------------------------------------------------------------------------
+    autocmd BufEnter *.wiki :call LaTeXtoUnicode#Enable()
+    autocmd BufLeave *.wiki :call LaTeXtoUnicode#Disable()
+
+
+    "--------------------------------------------------------------------------
     " FileType Highlighting/Theme Configurations
     autocmd FileType vim :setlocal colorcolumn=
     "--------------------------------------------------------------------------
@@ -423,15 +439,28 @@ augroup THE_PRIMEAGEN
     autocmd FileType python :inoremap <expr> <Tab> pumvisible() ? '<Down>' : '<Tab>'
     autocmd FileType python :inoremap <expr> <S-Tab> pumvisible() ? '<Up>' : '<S-Tab>'
 
+    autocmd FileType python :inoremap <expr> <C-x><C-x> &completeopt=='noselect,menuone' ? '<C-[>:set completeopt=noselect<Cr>:echo "Suggestion-menu off"<Cr>a' : '<C-[>:set completeopt=noselect,menuone<Cr>:echo "Suggestion-menu on"<Cr>a'
+    autocmd FileType python :inoremap <expr> <F4> &completeopt=='noselect,menuone' ? '<C-[>:set completeopt=noselect<Cr>:echo "Suggestion-menu off"<Cr>a' : '<C-[>:set completeopt=noselect,menuone<Cr>:echo "Suggestion-menu on"<Cr>a'
+
+    autocmd FileType vimwiki :inoremap <expr> <C-x><C-x> &completeopt=='menu,preview,noinsert,menuone,noselect' ? '<C-[>:set completeopt=noinsert<Cr>:echo "Suggestion-menu off"<Cr>a' : '<C-[>:set completeopt=menu,preview,noinsert,menuone,noselect<Cr>:echo "Suggestion-menu on"<Cr>a'
+    autocmd FileType vimwiki :inoremap <expr> <F4> &completeopt=='menu,preview,noinsert,menuone,noselect' ? '<C-[>:set completeopt=noinsert<Cr>:echo "Suggestion-menu off"<Cr>a' : '<C-[>:set completeopt=menu,preview,noinsert,menuone,noselect<Cr>:echo "Suggestion-menu on"<Cr>a'
+
+
     " AMAZING. GoTo left-most word in the current line. If you're already on it
     "          then go further to the left
-    nnoremap <expr> 0 col('.')<=5 ? '0' : '^'
+    autocmd FileType python :nnoremap <expr> 0 col('.')<=5 ? '0' : '^'
 
     "--------------------------------------------------------------------------
     autocmd FileType python :syn region foldImports start='"""' end='"""' fold keepend
+    autocmd FileType python :syn region foldManual start='#<#' end='#>#' fold keepend
+
     autocmd FileType python :setlocal foldmethod=syntax
     autocmd FileType python :setlocal foldclose=all
     autocmd FileType python :setlocal shiftwidth=4
+
+    autocmd FileType vimwiki :syn region foldImports start='"""' end='"""' fold keepend
+    autocmd FileType vimwiki :setlocal foldmethod=syntax
+    autocmd FileType vimwiki :setlocal foldclose=all
 
     autocmd FileType markdown :setlocal textwidth=80
     autocmd FileType markdown :setlocal wrap
@@ -440,6 +469,10 @@ augroup THE_PRIMEAGEN
     autocmd FileType markdown :setlocal formatoptions-=t
 
     autocmd FileType vimwiki :source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/vimwiki.vim
+
+    autocmd FileType vim nnoremap <C-p> :so %<Cr>
+
+    autocmd FileType julia :colorscheme TransparentWFrame
 
     "--------------------------------------------------------------------------
 augroup END
@@ -476,3 +509,4 @@ source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/SidePannel.vim
 "source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/markdown_stuff.vim
 source C:/Users/Lenovo/AppData/Local/nvim/myPlugins/vimwiki.vim
 
+colorscheme melange1

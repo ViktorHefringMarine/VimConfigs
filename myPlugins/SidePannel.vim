@@ -11,7 +11,7 @@ autocmd TabEnter * silent execute "let t:TerminalInUse = 0"
 
 
 
-function CreateSidePanel(width=50)
+function CreateSidePanel(width=41)
     "-------------------------------------------
     if exists(':GuiPopupmenu')
         exec "GuiPopupmenu 0"

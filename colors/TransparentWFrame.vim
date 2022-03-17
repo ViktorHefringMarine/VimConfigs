@@ -205,17 +205,22 @@ highlight StatusLineNC  guifg=#a89984 guibg=#404040
 highlight TabLineFill  guifg=#a89984 guibg=#404040
 highlight TabLineSel  gui=bold guifg=#282828 guibg=#a89984
 "nnoremap : :hi ColorColumn guibg=#7c6f64<CR>:hi VertSplit guibg=#7c6f64 guifg=#7c6f64<CR>:
-autocmd InsertEnter * highlight ColorColumn guibg=#504945
-autocmd InsertEnter * highlight VertSplit   guifg=#504945 guibg=#504945
-autocmd InsertEnter * highlight lualine_c_inactive  guifg=#ebdbb2 guibg=#504945
-autocmd InsertEnter * highlight StatusLineNC  guifg=#ebdbb2 guibg=#504945
-autocmd InsertEnter * highlight TabLineFill  guifg=#ebdbb2 guibg=#504945
-autocmd InsertEnter * highlight TabLineSel  gui=bold guifg=#282828 guibg=#83a598
 
-autocmd InsertLeave * highlight ColorColumn guibg=#404040
-autocmd InsertLeave * highlight VertSplit   guifg=#404040 guibg=#404040
-autocmd InsertLeave * highlight lualine_c_inactive  guifg=#a89984 guibg=#404040
-autocmd InsertLeave * highlight StatusLineNC  guifg=#a89984 guibg=#404040
-autocmd InsertLeave * highlight TabLineFill  guifg=#a89984 guibg=#404040
-autocmd InsertLeave * highlight TabLineSel  gui=bold guifg=#282828 guibg=#a89984
+hi mySpecialSymbols guifg=#A07A8B
 
+augroup ColorGroup
+    autocmd!
+    autocmd InsertEnter * highlight ColorColumn guibg=#504945
+    autocmd InsertEnter * highlight VertSplit   guifg=#504945 guibg=#504945
+    autocmd InsertEnter * highlight lualine_c_inactive  guifg=#ebdbb2 guibg=#504945
+    autocmd InsertEnter * highlight StatusLineNC  guifg=#ebdbb2 guibg=#504945
+    autocmd InsertEnter * highlight TabLineFill  guifg=#ebdbb2 guibg=#504945
+    autocmd InsertEnter * highlight TabLineSel  gui=bold guifg=#282828 guibg=#83a598
+
+    autocmd InsertLeave * highlight ColorColumn guibg=#404040
+    autocmd InsertLeave * highlight VertSplit   guifg=#404040 guibg=#404040
+    autocmd InsertLeave * highlight lualine_c_inactive  guifg=#a89984 guibg=#404040
+    autocmd InsertLeave * highlight StatusLineNC  guifg=#a89984 guibg=#404040
+    autocmd InsertLeave * highlight TabLineFill  guifg=#a89984 guibg=#404040
+    autocmd InsertLeave * highlight TabLineSel  gui=bold guifg=#282828 guibg=#a89984
+augroup END

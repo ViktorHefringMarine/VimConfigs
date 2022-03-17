@@ -21,10 +21,10 @@ let g:julia_indent_align_brackets=0
 
 
 function NeotermTerminal(currentFile)
-    if !exists("s:TerminalsOpen") | !bufexists(s:TerminalsOpen)
+    if !exists("s:TerminalsOpen")
         let s:TerminalsOpen = 1
         exec "winc h"
-        exec "T Julia"
+        exec "T Julia --quiet"
         exec "setlocal statusline="
         let b:CloseThisWindowIfItsLonely = 1    " re-label this variable to be named after your plugin
         setlocal nobuflisted

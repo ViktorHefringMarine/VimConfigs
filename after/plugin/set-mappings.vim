@@ -1,5 +1,11 @@
 
 
+
+
+" Customization mappings
+nnoremap <F1>- :let g:neovide_transparency-=0.01<CR>:let g:neovide_transparency<CR>
+nnoremap <F1>= :let g:neovide_transparency+=0.01<CR>:let g:neovide_transparency<CR>
+
 "Lightspeed mappings
 "unmap z
 "unmap Z
@@ -224,8 +230,8 @@ tnoremap <Esc> <C-\><C-n>
 
 nnoremap <C-k> 4k
 nnoremap <C-j> 4j
-nnoremap <C-d> 3j
-nnoremap <C-u> 3k
+nnoremap <C-d> 3<C-e>
+nnoremap <C-u> 3<C-y>
 nnoremap ma :call ToggleMaximizeCurrentWindow()<CR>
 
 
@@ -239,4 +245,20 @@ nnoremap <silent>  * :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchf
 nnoremap <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=0<CR>n
 nnoremap <silent> g* :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=1<CR>n
 nnoremap <silent> g# :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=0<CR>n
+
+
+
+
+
+
+
+
+imap <C-l> <C-o>
+imap <C-o> <CR>
+
+
+
+
+
+
 

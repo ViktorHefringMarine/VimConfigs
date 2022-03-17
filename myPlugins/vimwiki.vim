@@ -88,6 +88,12 @@ let wiki_Mathematics.ext             = '.wiki'
 let wiki_Mathematics.syntax          = 'default'
 let wiki_Mathematics.nested_syntaxes   = {}
 
+let wiki_Rust = {}
+let wiki_Rust.name            = 'Rust'
+let wiki_Rust.path            = '~/VimWikiMain/Rust/'
+let wiki_Rust.ext             = '.wiki'
+let wiki_Rust.syntax          = 'default'
+let wiki_Rust.nested_syntaxes   = {'rust':'rust'}
 
 
 "All My Wikis
@@ -101,6 +107,7 @@ let g:vimwiki_list = [
 \   wiki_Conda,
 \   wiki_corona,
 \   wiki_IR,
+\   wiki_Rust,
 \]
 
 

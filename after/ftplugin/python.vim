@@ -67,7 +67,7 @@ function NeotermTerminalPython(current_file, main_window_nr, Update_RunFile)
         execute "1winc w"
         if t:NerdTreeInUse == 1
             NERDTreeToggle
-            execute "71winc |"
+            execute "41winc |"
         endif
         "execute 'T PROMPT $_$_\033[32m' . substitute(getcwd(), '^.*\', '', '') . '$g$s'
         execute 'T PROMPT $_$_' . substitute(getcwd(), '^.*\', '', '') . '$g$s'
@@ -79,21 +79,32 @@ function NeotermTerminalPython(current_file, main_window_nr, Update_RunFile)
         setlocal foldcolumn=1
         setlocal winfixwidth
 
-        syntax region TerminalString start=+"C+ skip=+\\\\\|\\'\|\\$+ end=+.py"+
-        hi TerminalString gui=undercurl,italic guifg=#ffdf87
 
+        " Traceback
         syntax match Terminal_Error /Traceback (most recent call last):/
         hi Terminal_Error guibg=bold,underline, guifg=#af5f5f
 
+        " File
         exec "match Terminal_File /File/"
         hi Terminal_File gui=bold guifg=#87875f
 
+        " line
         exec "2match Terminal_Line /line/"
         hi Terminal_Line gui=italic guifg=#d29958
 
+        " Route-Guidance
+        syntax keyword RootDirName /Route-guidance/
+        hi RootDirName gui=bold guifg=#E49B5D
+
 
         syntax match Terminal_Call /NoDkferd>/
-        hi Terminal_Call gui=bold guifg=#98be65
+        syntax match Terminal_Call /Route-guidance>/
+        hi Terminal_Call gui=bold guifg=#E49B5D
+
+
+        " String
+        syntax region TerminalString start=+"C+ skip=+\\\\\|\\'\|\\$+ end=+.py"+
+        hi TerminalString gui=italic guifg=#ffdf87
 
         syntax match Terminal_number /\<\d\+\,/
         hi Terminal_number gui=bold guifg=#af5f00
